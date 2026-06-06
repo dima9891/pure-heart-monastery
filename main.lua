@@ -6,27 +6,17 @@ local player = playerModule.createCharacter()
 while true do
     io.write("> ")
 
-    local command = io.read()
+    local input = io.read()
 
-    if command == "stats" then
-        commands.showStats(player)
-
-    elseif command == "help" then
-        commands.showHelp()
-
-    elseif command == "look" then
-        commands.lookAround(player)
-
-    elseif command == "move north" then
-        commands.movePlayer(player, "north")
-
-    elseif command == "move south" then
-        commands.movePlayer(player, "south")
-
-    elseif command == "quit" then
+    if input == "quit" then
         break
+    end
 
+    local command = commands[input]
+
+    if command then
+        command(player)
     else
-        print("Unknown command")
+        print("Неизвестная команда")
     end
 end
