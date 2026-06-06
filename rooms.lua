@@ -12,12 +12,12 @@ local rooms = {
     pit = {
         id = 'pit',
         name = "Яма",
-        description = "По краю яму спускается старая лестница. Она ведет в темные глубины",
+        description = "По краю ямы спускается старая лестница. Она ведет в темные глубины",
     },
     pitBottom = {
         id = 'pitBottom',
         name = "Дно ямы",
-        description = "На дне ямы лежат скелеты бедняг которые здесь погибли",
+        description = "На дне ямы лежат скелеты бедняг, которые здесь погибли",
     },
     crypt = {
         id = 'crypt',
@@ -40,7 +40,10 @@ rooms.hall.north = rooms.entrance
 rooms.hall.south = rooms.crypt
 rooms.hall.east = rooms.pit
 
+rooms.pit.west = rooms.hall
 rooms.pit.south = rooms.pitBottom
+
+rooms.pitBottom.north = rooms.pit
 
 rooms.crypt.north = rooms.hall
 
