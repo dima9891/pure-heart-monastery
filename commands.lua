@@ -1,3 +1,4 @@
+local rooms = require("rooms")
 local commands = {}
 
 commands.help = function()
@@ -6,6 +7,8 @@ commands.help = function()
     print("look")
     print("move north")
     print("move south")
+    print("move east")
+    print("move west")
     print("take")
     print("inventory")
     print("help")
@@ -20,7 +23,8 @@ commands.stats = function(player)
 end
 
 commands.look = function(player)
-    local room = player.room
+    print(player.room)
+    local room = rooms[player.room]
 
     print(room.name)
     print(room.description)
@@ -35,6 +39,14 @@ commands.look = function(player)
     if room.south then
         print("- south")
     end
+
+    if room.east then
+        print("- east")
+    end
+
+    if room.west then
+        print("- west")
+    end
 end
 
 commands.showItems = function(room)
@@ -48,7 +60,9 @@ commands.showItems = function(room)
 end
 
 commands.take = function(player, itemIndex)
-    if not player.room.items then 
+    local room = rooms[player.room]
+
+    if not room.items then
         print("В комнате ничего нет")
         return
     end
@@ -59,7 +73,7 @@ commands.take = function(player, itemIndex)
         return
     end
 
-    local item = player.room.items[itemIndex]
+    local item = room.items[itemIndex]
 
     if not item then
         print("Такого предмета нет")
@@ -67,7 +81,7 @@ commands.take = function(player, itemIndex)
     end
 
     table.insert(player.inventory, item)
-    table.remove(player.room.items, itemIndex)
+    table.remove(room.items, itemIndex)
 
     print("Ты подобрал: " .. item)
 end
@@ -79,10 +93,10 @@ commands.inventory = function(player)
 end
 
 commands.move = function(player, direction)
-    local destination = player.room[direction]
+    local destination = rooms[player.room][direction]
 
     if destination then
-        player.room = destination
+        player.room = destination.id
         commands.look(player)
     else
         print("Ты не можешь туда пойти")
