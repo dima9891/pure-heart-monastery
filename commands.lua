@@ -1,3 +1,4 @@
+local PlayerFactory = require("playerFactory")
 local rooms = require("rooms")
 local commands = {}
 
@@ -101,6 +102,10 @@ commands.move = function(player, direction)
     else
         print("Ты не можешь туда пойти")
     end
+end
+
+commands.save = function(player)
+    PlayerFactory.save(player)
 end
 
 return commands

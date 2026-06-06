@@ -1,7 +1,7 @@
-local playerModule = require("player")
+local PlayerFactory = require("playerFactory")
 local commands = require("commands")
 
-local player = playerModule.createCharacter()
+local player = PlayerFactory.newOrCreate()
 
 while true do
     io.write("> ")
