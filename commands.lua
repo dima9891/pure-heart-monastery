@@ -1,12 +1,5 @@
 local commands = {}
 
-commands.stats = function(player)
-    print("Name: " .. player.name)
-    print("Class: " .. player.class)
-    print("HP: " .. player.hp)
-    print("Attack: " .. player.attack)
-end
-
 commands.help = function()
     print("Доступные команды: ")
     print("stats")
@@ -15,6 +8,13 @@ commands.help = function()
     print("move south")
     print("help")
     print("quit")
+end
+
+commands.stats = function(player)
+    print("Name: " .. player.name)
+    print("Class: " .. player.class)
+    print("HP: " .. player.hp)
+    print("Attack: " .. player.attack)
 end
 
 commands.look = function(player)
@@ -34,7 +34,7 @@ commands.look = function(player)
     end
 end
 
-local function movePlayer(player, direction)
+commands.move = function(player, direction)
     local destination = player.room[direction]
 
     if destination then
@@ -44,14 +44,6 @@ local function movePlayer(player, direction)
     else
         print("Ты не можешь туда пойти")
     end
-end
-
-commands["move north"] = function(player)
-    movePlayer(player, "north")
-end
-
-commands["move south"] = function(player)
-    movePlayer(player, "south")
 end
 
 return commands

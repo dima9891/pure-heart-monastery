@@ -12,10 +12,10 @@ while true do
         break
     end
 
-    local command = commands[input]
+    local action, argument = input:match("^(%S+)%s*(.*)$")
 
-    if command then
-        command(player)
+    if action then
+        commands[action](player, argument)
     else
         print("Неизвестная команда")
     end
