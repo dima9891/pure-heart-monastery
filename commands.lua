@@ -6,6 +6,8 @@ commands.help = function()
     print("look")
     print("move north")
     print("move south")
+    print("take")
+    print("inventory")
     print("help")
     print("quit")
 end
@@ -22,6 +24,7 @@ commands.look = function(player)
 
     print(room.name)
     print(room.description)
+    commands.showItems(room)
 
     print("\nВыходы:")
 
@@ -34,12 +37,52 @@ commands.look = function(player)
     end
 end
 
+commands.showItems = function(room)
+    if room.items == nil then
+        return
+    end
+    print("В комнате есть следующие предметы:")
+    for index, item in ipairs(room.items) do
+        print(index, item)
+    end
+end
+
+commands.take = function(player, itemIndex)
+    if not player.room.items then 
+        print("В комнате ничего нет")
+        return
+    end
+    itemIndex = tonumber(itemIndex)
+
+    if not itemIndex then
+        print("Укажи номер предмета")
+        return
+    end
+
+    local item = player.room.items[itemIndex]
+
+    if not item then
+        print("Такого предмета нет")
+        return
+    end
+
+    table.insert(player.inventory, item)
+    table.remove(player.room.items, itemIndex)
+
+    print("Ты подобрал: " .. item)
+end
+
+commands.inventory = function(player)
+    for index, item in ipairs(player.inventory) do
+        print(index, item)
+    end
+end
+
 commands.move = function(player, direction)
     local destination = player.room[direction]
 
     if destination then
         player.room = destination
-        print("Ты идешь " .. direction)
         commands.look(player)
     else
         print("Ты не можешь туда пойти")

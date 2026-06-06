@@ -25,7 +25,8 @@ function player.createCharacter()
         class = selectedClass.class,
         hp = selectedClass.hp,
         attack = selectedClass.attack,
-        room = rooms.entrance
+        room = rooms.entrance,
+        inventory = {}
     }
 end
 

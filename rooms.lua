@@ -20,4 +20,9 @@ rooms.hall.south = rooms.crypt
 
 rooms.crypt.north = rooms.hall
 
+rooms.hall.items = {
+    "меч",
+    "факел"
+}
+
 return rooms
