@@ -3,7 +3,7 @@ local classes = require("classes")
 
 local player = {}
 
-function player.newOrCreate()
+function player.loadOrCreate()
     local choice
 
     repeat
