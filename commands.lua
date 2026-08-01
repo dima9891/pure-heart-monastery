@@ -61,51 +61,69 @@ commands.look = function(player)
     end
 end
 
+function CanInteract(object, element, number, msg)
+    if not object[element] then
+        print(msg.noEl)
+        return false
+    end
+
+    number = tonumber(number)
+
+    if not number then
+        print(msg.noNumber)
+        return false
+    end
+
+    if not object[element][number] then
+        print(msg.wrongNumber)
+        return false
+    end
+
+    return true
+end
+
 commands.talk = function(player, npcIndex)
     local room = rooms[player.room]
+    local msg = {
+        noEL = "В комнате никого нет",
+        noNumber = "Укажи номер персонажа",
+        wrongNumber = "Такого персонажа нет"
+    }
 
-    if not room.npc then
-        print("В комнате никого нет")
+    if CanInteract(room, 'npc', npcIndex, msg) == false then
         return
     end
 
     npcIndex = tonumber(npcIndex)
     local npc = room.npc[npcIndex]
-
     print(npc.description)
 
 end
 
 commands.take = function(player, itemIndex)
     local room = rooms[player.room]
+    local msg = {
+        noEL = "В комнате ничего нет",
+        noNumber = "Укажи номер предмета",
+        wrongNumber = "Такого предмета нет"
+    }
 
-    if not room.items then
-        print("В комнате ничего нет")
+    if CanInteract(room, 'items', itemIndex, msg) == false then
         return
     end
+
     itemIndex = tonumber(itemIndex)
-
-    if not itemIndex then
-        print("Укажи номер предмета")
-        return
-    end
-
     local item = room.items[itemIndex]
-
-    if not item then
-        print("Такого предмета нет")
-        return
-    end
 
     table.insert(player.inventory, item)
     table.remove(room.items, itemIndex)
 
-    print("Ты подобрал: " .. item)
+    print("Ты подобрал: " .. item.name)
 end
 
 commands.inventory = function(player)
     for index, item in ipairs(player.inventory) do
-        print(index, item)
+        print(index, item.name)
     end
 end
 
