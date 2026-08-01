@@ -12,6 +12,7 @@ commands.help = function()
     print("move west")
     print("take")
     print("inventory")
+    print("talk")
     print("help")
     print("quit")
 end
@@ -30,6 +31,7 @@ commands.look = function(player)
     print(room.name)
     print(room.description)
     commands.showItems(room)
+    commands.showNPC(room)
 
     print("\nВыходы:")
 
@@ -58,6 +60,31 @@ commands.showItems = function(room)
     for index, item in ipairs(room.items) do
         print(index, item)
     end
+end
+
+commands.showNPC = function(room)
+    if room.npc == nil then
+        return
+    end
+    print("В комнате находятся:")
+    for index, item in ipairs(room.npc) do
+        print(index, item.name)
+    end
+end
+
+commands.talk = function(player, npcIndex)
+    local room = rooms[player.room]
+
+    if not room.npc then
+        print("В комнате никого нет")
+        return
+    end
+
+    npcIndex = tonumber(npcIndex)
+    local npc = room.npc[npcIndex]
+
+    print(npc.description)
+
 end
 
 commands.take = function(player, itemIndex)
