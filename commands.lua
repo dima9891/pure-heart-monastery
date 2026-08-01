@@ -27,11 +27,20 @@ end
 commands.look = function(player)
     print(player.room)
     local room = rooms[player.room]
+    local function showAll(type, msg)
+        if room[type] == nil then
+            return
+        end
+        print(msg)
+        for index, item in ipairs(room[type]) do
+            print(index, item.name)
+        end
+    end
 
     print(room.name)
     print(room.description)
-    commands.showItems(room)
-    commands.showNPC(room)
+    showAll('items', "В комнате есть следующие предметы:")
+    showAll('npc', "В комнате находятся:")
 
     print("\nВыходы:")
 
@@ -49,26 +58,6 @@ commands.look = function(player)
 
     if room.west then
         print("- west")
-    end
-end
-
-commands.showItems = function(room)
-    if room.items == nil then
-        return
-    end
-    print("В комнате есть следующие предметы:")
-    for index, item in ipairs(room.items) do
-        print(index, item)
-    end
-end
-
-commands.showNPC = function(room)
-    if room.npc == nil then
-        return
-    end
-    print("В комнате находятся:")
-    for index, item in ipairs(room.npc) do
-        print(index, item.name)
     end
 end
 

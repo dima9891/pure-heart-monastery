@@ -1,4 +1,5 @@
 local npc = require('npc');
+local items = require('items');
 
 local rooms = {
     entrance = {
@@ -50,8 +51,8 @@ rooms.pitBottom.north = rooms.pit
 rooms.crypt.north = rooms.hall
 
 rooms.hall.items = {
-    "меч",
-    "факел"
+    items.sword,
+    items.torch
 }
 
 rooms.hall.npc = {
