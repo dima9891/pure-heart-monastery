@@ -1,4 +1,4 @@
-local dialog = require('dialog')
+local dialog = require('data.dialog.dialog')
 
 local npc = {
     toma = {
