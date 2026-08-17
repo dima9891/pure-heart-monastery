@@ -48,7 +48,7 @@ function player.createCharacter()
     }
 end
 
-function player.load ()
+function player.load()
     local file, err = io.open("save.json", "r")
 
     if not file then
@@ -62,9 +62,9 @@ function player.load ()
     return json.decode(content)
 end
 
-function player.save(player)
+function player.save(playerTable)
     local file = assert(io.open("save.json", "w"))
-    file:write(json.encode(player))
+    file:write(json.encode(playerTable))
     file:close()
     print("Сохранено")
 end
