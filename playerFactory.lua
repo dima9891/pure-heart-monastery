@@ -1,5 +1,5 @@
 local json = require("json")
-local classes = require("classes")
+local classes = require("data.class.class")
 
 local player = {}
 

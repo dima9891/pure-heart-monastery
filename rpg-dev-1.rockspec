@@ -16,12 +16,10 @@ dependencies = {
 build = {
    type = "builtin",
    modules = {
-      classes = "classes.lua",
+      class = "data/class/class.lua",
       commands = "commands.lua",
-      dungeon = "dungeon.lua",
       main = "main.lua",
-      monster = "monster.lua",
-      player = "player.lua",
-      rooms = "rooms.lua"
+      monster = "data/monster/monster.lua"
+      room = "data/room/room.lua"
    }
 }

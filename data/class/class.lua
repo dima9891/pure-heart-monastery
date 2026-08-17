@@ -1,4 +1,4 @@
-local classes = {
+return {
     ["1"] = {
         class = "Воин",
         hp = 20,
@@ -17,5 +17,3 @@ local classes = {
         attack = 10
     }
 }
-
-return classes

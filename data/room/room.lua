@@ -1,5 +1,5 @@
-local npc = require('npc');
-local items = require('items');
+local npc = require('data.npc.npc');
+local items = require('data.item.item');
 
 local rooms = {
     entrance = {

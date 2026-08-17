@@ -1,5 +1,5 @@
 local PlayerFactory = require("playerFactory")
-local rooms = require("rooms")
+local rooms = require("data.room.room")
 local commands = {}
 
 commands.help = function()
