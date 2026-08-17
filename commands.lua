@@ -90,6 +90,57 @@ commands.talk = function(player, npcIndex)
         wrongNumber = "Такого персонажа нет"
     }
 
+    local function dialogLoop(dialog)
+        local current = 'greeting'
+
+        local function dprint(line)
+            print('- ' .. line)
+        end
+
+        local function printAnswers(speechline)
+            if speechline.answers == nil then
+                dprint(dialog.bye.line)
+                return
+            end
+            for index, item in ipairs(speechline.answers) do
+                print(index, item.line)
+            end
+        end
+
+        dprint(dialog[current].line)
+        printAnswers(dialog[current])
+
+        while true do
+            if dialog[current].answers == nil then
+                break
+            end
+
+            io.write(">> ")
+
+            local input = io.read()
+
+            if input == "bye" then
+                printAnswers(dialog.bye)
+                break
+            end
+
+            local variant = tonumber(input)
+
+            if dialog[current].answers[variant] then
+                local nextId = dialog[current].answers[variant].next
+                if nextId == nil then
+                    break
+                end
+
+                current = nextId
+                dprint(dialog[current].line)
+                printAnswers(dialog[current])
+            else
+                print("Неизвестная команда")
+            end
+        end
+    end
+
     if CanInteract(room, 'npc', npcIndex, msg) == false then
         return
     end
@@ -97,7 +148,7 @@ commands.talk = function(player, npcIndex)
     npcIndex = tonumber(npcIndex)
     local npc = room.npc[npcIndex]
     print(npc.description)
-
+    dialogLoop(npc.dialog)
 end
 
 commands.take = function(player, itemIndex)
