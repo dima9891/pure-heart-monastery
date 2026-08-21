@@ -226,8 +226,12 @@ commands.attack = function(player, index)
         local input = io.read()
 
         if input == 'a' then
-            print('Вы атакуете ' .. monster.name)
-            monsterHP = monsterHP - 1
+            local playerHit = 1
+            if player.equip then
+                playerHit = math.random(1, player.equip.attack)
+            end
+            print('Вы атакуете ' .. monster.name .. ' с силой ' .. playerHit)
+            monsterHP = monsterHP - playerHit
         elseif input == 'p' then
             print('Вы молитесь и получаете благословение')
             if player.hp < playerMaxHP then
@@ -235,7 +239,7 @@ commands.attack = function(player, index)
             end
         end
 
-        if monsterHP == 0 then
+        if monsterHP <= 0 then
             print(monster.name .. ' повержен')
             break
         end
@@ -280,8 +284,13 @@ commands.equip = function(player, index)
         return
     end
 
+    if player.equip then
+        table.insert(player.inventory, player.equip)
+    end
+
     player.equip = item
     table.remove(player.inventory, i)
+    print('Экипирован ' .. player.equip.name)
 end
 
 ---@param player Player
