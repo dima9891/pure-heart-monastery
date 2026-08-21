@@ -1,4 +1,5 @@
 local PlayerFactory = require("playerFactory")
+---@type table
 local rooms = require("data.room.room")
 local commands = {}
 
@@ -17,6 +18,7 @@ commands.help = function()
     print("quit")
 end
 
+---@param player Player
 commands.stats = function(player)
     print("Name: " .. player.name)
     print("Class: " .. player.class)
@@ -24,13 +26,19 @@ commands.stats = function(player)
     print("Strength: " .. player.str)
     print("Dextreity: " .. player.dex)
     print("Will: " .. player.will)
-    print("Experience Points: " .. player.hp)
+    print("Experience Points: " .. player.exp)
     print("Level: " .. player.lvl)
 end
 
+---@param player Player
 commands.look = function(player)
     print(player.room)
+
+    ---@type table
     local room = rooms[player.room]
+
+    ---@param type string
+    ---@param msg string
     local function showAll(type, msg)
         if room[type] == nil then
             return
@@ -88,6 +96,8 @@ function CanInteract(element, number, msg)
     return true
 end
 
+---@param player Player
+---@param npcIndex string
 commands.talk = function(player, npcIndex)
     local room = rooms[player.room]
     local msg = {
@@ -149,17 +159,19 @@ commands.talk = function(player, npcIndex)
         end
     end
 
-    npcIndex = tonumber(npcIndex)
+    local n = tonumber(npcIndex)
 
-    if CanInteract(room.npc, npcIndex, msg) == false then
+    if CanInteract(room.npc, n, msg) == false then
         return
     end
 
-    local npc = room.npc[npcIndex]
+    local npc = room.npc[n]
     print(npc.description)
     dialogLoop(npc.dialog)
 end
 
+---@param player Player
+---@param itemIndex string
 commands.take = function(player, itemIndex)
     local room = rooms[player.room]
     local msg = {
@@ -168,26 +180,29 @@ commands.take = function(player, itemIndex)
         wrongNumber = "Такого предмета нет"
     }
 
-    itemIndex = tonumber(itemIndex)
+    local i = tonumber(itemIndex)
 
-    if CanInteract(room.items, itemIndex, msg) == false then
+    if CanInteract(room.items, i, msg) == false then
         return
     end
 
-    local item = room.items[itemIndex]
+    local item = room.items[i]
 
     table.insert(player.inventory, item)
-    table.remove(room.items, itemIndex)
+    table.remove(room.items, i)
 
     print("Ты подобрал: " .. item.name)
 end
 
+---@param player Player
 commands.inventory = function(player)
     for index, item in ipairs(player.inventory) do
         print(index, item.name)
     end
 end
 
+---@param player Player
+---@param direction string
 commands.move = function(player, direction)
     local destination = rooms[player.room][direction]
 
@@ -199,6 +214,7 @@ commands.move = function(player, direction)
     end
 end
 
+---@param player Player
 commands.save = function(player)
     PlayerFactory.save(player)
 end

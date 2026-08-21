@@ -1,8 +1,20 @@
 local json = require("json")
 local classes = require("data.class.class")
 
+---@class Player
+---@field name string
+---@field class string
+---@field hp integer
+---@field str integer
+---@field dex integer
+---@field will integer
+---@field exp integer
+---@field lvl integer
+---@field room string
+---@field inventory table[]
 local player = {}
 
+---@return Player?
 function player.loadOrCreate()
     local choice
 
@@ -20,6 +32,7 @@ function player.loadOrCreate()
     end
 end
 
+---@return Player
 function player.createCharacter()
     print("Введите ваше имя:")
     local name = io.read()
@@ -53,6 +66,7 @@ function player.createCharacter()
     }
 end
 
+---@return Player?
 function player.load()
     local file, err = io.open("save.json", "r")
 
