@@ -211,6 +211,9 @@ commands.attack = function(player, index)
         return
     end
 
+    print('Наберите a чтобы атаковать')
+    print('Наберите p чтобы помолиться')
+
     local monster = room.monster[n]
     local monsterHP = monster.hp
 
