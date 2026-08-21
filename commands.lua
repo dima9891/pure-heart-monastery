@@ -222,6 +222,22 @@ commands.attack = function(player, index)
     print('Перед вами ' .. monster.name)
     print(monster.description)
 
+    local monsterHit = function()
+        local hit = math.random(0, monster.attack)
+        print(monster.name .. ' атакует вас с силой ' .. hit)
+        player.hp = player.hp - hit
+        print('Ваше текущее здоровье: ' .. player.hp)
+    end
+
+    local playerHit = function()
+        local hit = 1
+        if player.equip then
+            hit = math.random(1, player.equip.attack)
+        end
+        monsterHP = monsterHP - hit
+        print('Вы атакуете ' .. monster.name .. ' с силой ' .. hit)
+    end
+
     while monsterHP > 0 do
         io.write("+> ")
         local playerMaxHP = player.hp
@@ -229,17 +245,16 @@ commands.attack = function(player, index)
         local input = io.read()
 
         if input == 'a' then
-            local playerHit = 1
-            if player.equip then
-                playerHit = math.random(1, player.equip.attack)
-            end
-            print('Вы атакуете ' .. monster.name .. ' с силой ' .. playerHit)
-            monsterHP = monsterHP - playerHit
+            playerHit()
+            monsterHit()
         elseif input == 'p' then
             print('Вы молитесь и получаете благословение')
             if player.hp < playerMaxHP then
                 player.hp = player.hp + 1
             end
+            monsterHit()
+        else
+            print('Неизвестная команда')
         end
 
         if monsterHP <= 0 then
@@ -248,13 +263,9 @@ commands.attack = function(player, index)
             break
         end
 
-        print(monster.name .. ' атакует вас')
-        local monsterHit = math.random(0, monster.attack)
-        player.hp = player.hp - monsterHit
-
-        print('Ваше текущее здоровье: ' .. player.hp)
         if player.hp <= 0 then
             print('Вы умерли')
+            break
         end
     end
 
