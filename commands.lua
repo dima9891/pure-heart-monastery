@@ -241,6 +241,7 @@ commands.attack = function(player, index)
 
         if monsterHP <= 0 then
             print(monster.name .. ' повержен')
+            player.exp = player.exp + monster.expPoints
             break
         end
 
