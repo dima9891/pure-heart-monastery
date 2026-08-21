@@ -1,5 +1,6 @@
 local npc = require('data.npc.npc');
 local items = require('data.item.item');
+local monster = require('data.monster.monster');
 
 local rooms = {
     entrance = {
@@ -57,6 +58,12 @@ rooms.hall.items = {
 
 rooms.hall.npc = {
     npc.toma
+}
+
+rooms.pitBottom.monster = {
+    monster.skelet,
+    monster.skelet,
+    monster.skelet
 }
 
 return rooms

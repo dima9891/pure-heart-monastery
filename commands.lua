@@ -53,6 +53,7 @@ commands.look = function(player)
     print(room.description)
     showAll('items', "В комнате есть следующие предметы:")
     showAll('npc', "В комнате находятся:")
+    showAll('monster', "В комнате вас поджидают")
 
     print("\nВыходы:")
 
@@ -192,6 +193,59 @@ commands.take = function(player, itemIndex)
     table.remove(room.items, i)
 
     print("Ты подобрал: " .. item.name)
+end
+
+---@param player Player
+---@param index string
+commands.attack = function(player, index)
+    local room = rooms[player.room]
+    local msg = {
+        noEl = "В комнате никого нет",
+        noNumber = "Укажи номер монстра",
+        wrongNumber = "Такого монстра нет"
+    }
+
+    local n = tonumber(index)
+
+    if CanInteract(room.monster, n, msg) == false then
+        return
+    end
+
+    local monster = room.monster[n]
+    local monsterHP = monster.hp
+
+    while monsterHP > 0 do
+        io.write("+> ")
+        local playerMaxHP = player.hp
+
+        local input = io.read()
+
+        if input == 'a' then
+            print('Вы атакуете ' .. monster.name)
+            monsterHP = monsterHP - 1
+        elseif input == 'p' then
+            print('Вы молитесь и получаете благословение')
+            if player.hp < playerMaxHP then
+                player.hp = player.hp + 1
+            end
+        end
+
+        if monsterHP == 0 then
+            print(monster.name .. ' повержен')
+            break
+        end
+
+        print(monster.name .. ' атакует вас')
+        local monsterHit = math.random(0, monster.attack)
+        player.hp = player.hp - monsterHit
+
+        print('Ваше текущее здоровье: ' .. player.hp)
+        if player.hp <= 0 then
+            print('Вы умерли')
+        end
+    end
+
+    table.remove(room.monster, n)
 end
 
 ---@param player Player
