@@ -12,8 +12,10 @@ commands.help = function()
     print("move east")
     print("move west")
     print("take")
+    print("equip")
     print("inventory")
     print("talk")
+    print("attack")
     print("help")
     print("quit")
 end
@@ -256,6 +258,30 @@ commands.inventory = function(player)
     for index, item in ipairs(player.inventory) do
         print(index, item.name)
     end
+
+    if player.equip then
+        print('Экипирован ' .. player.equip.name)
+    end
+end
+
+---@param player Player
+---@param index string
+commands.equip = function(player, index)
+    local i = tonumber(index)
+    local item = player.inventory[i]
+
+    if not item then
+        print('Такого предмета в инвентаре нет')
+        return
+    end
+
+    if item.equip == false then
+        print('Предмет нельзя экипировать')
+        return
+    end
+
+    player.equip = item
+    table.remove(player.inventory, i)
 end
 
 ---@param player Player

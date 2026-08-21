@@ -1,10 +1,11 @@
-local items = {
+return {
     torch = {
-        name = 'Факел'
+        name = 'Факел',
+        equip = false
     },
     sword = {
-        name = 'Меч'
+        name = 'Меч',
+        equip = true,
+        attack = 8
     }
 }
-
-return items

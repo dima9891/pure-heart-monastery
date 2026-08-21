@@ -12,6 +12,7 @@ local classes = require("data.class.class")
 ---@field lvl integer
 ---@field room string
 ---@field inventory table[]
+---@field equip table?
 local player = {}
 
 ---@return Player?
@@ -62,7 +63,8 @@ function player.createCharacter()
         lvl = 1,
         exp = 0,
         room = 'entrance',
-        inventory = {}
+        inventory = {},
+        equip = nil
     }
 end
 
