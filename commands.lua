@@ -61,20 +61,22 @@ commands.look = function(player)
     end
 end
 
-function CanInteract(object, element, number, msg)
-    if not object[element] then
+---@param element? table
+---@param number? integer
+---@param msg table<string, string>
+---@return boolean
+function CanInteract(element, number, msg)
+    if not element then
         print(msg.noEl)
         return false
     end
-
-    number = tonumber(number)
 
     if not number then
         print(msg.noNumber)
         return false
     end
 
-    if not object[element][number] then
+    if not element[number] then
         print(msg.wrongNumber)
         return false
     end
@@ -85,7 +87,7 @@ end
 commands.talk = function(player, npcIndex)
     local room = rooms[player.room]
     local msg = {
-        noEL = "В комнате никого нет",
+        noEl = "В комнате никого нет",
         noNumber = "Укажи номер персонажа",
         wrongNumber = "Такого персонажа нет"
     }
@@ -93,6 +95,8 @@ commands.talk = function(player, npcIndex)
     local function dialogLoop(dialog)
         local current = 'greeting'
 
+        ---@param line string
+        ---@return nil
         local function dprint(line)
             print('- ' .. line)
         end
@@ -141,11 +145,12 @@ commands.talk = function(player, npcIndex)
         end
     end
 
-    if CanInteract(room, 'npc', npcIndex, msg) == false then
+    npcIndex = tonumber(npcIndex)
+
+    if CanInteract(room.npc, npcIndex, msg) == false then
         return
     end
 
-    npcIndex = tonumber(npcIndex)
     local npc = room.npc[npcIndex]
     print(npc.description)
     dialogLoop(npc.dialog)
@@ -154,16 +159,17 @@ end
 commands.take = function(player, itemIndex)
     local room = rooms[player.room]
     local msg = {
-        noEL = "В комнате ничего нет",
+        noEl = "В комнате ничего нет",
         noNumber = "Укажи номер предмета",
         wrongNumber = "Такого предмета нет"
     }
 
-    if CanInteract(room, 'items', itemIndex, msg) == false then
+    itemIndex = tonumber(itemIndex)
+
+    if CanInteract(room.items, itemIndex, msg) == false then
         return
     end
 
-    itemIndex = tonumber(itemIndex)
     local item = room.items[itemIndex]
 
     table.insert(player.inventory, item)
