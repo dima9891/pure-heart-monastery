@@ -219,6 +219,9 @@ commands.attack = function(player, index)
     local monster = room.monster[n]
     local monsterHP = monster.hp
 
+    print('Перед вами ' .. monster.name)
+    print(monster.description)
+
     while monsterHP > 0 do
         io.write("+> ")
         local playerMaxHP = player.hp
