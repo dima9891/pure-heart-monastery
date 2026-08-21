@@ -34,6 +34,7 @@ function player.createCharacter()
         end
 
         choice = io.read()
+        choice = tonumber(choice)
     until classes[choice]
 
     local selectedClass = classes[choice]
@@ -42,7 +43,11 @@ function player.createCharacter()
         name = name,
         class = selectedClass.class,
         hp = selectedClass.hp,
-        attack = selectedClass.attack,
+        str = selectedClass.str,
+        dex = selectedClass.str,
+        will = selectedClass.will,
+        lvl = 1,
+        exp = 0,
         room = 'entrance',
         inventory = {}
     }

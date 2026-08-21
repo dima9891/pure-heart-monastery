@@ -1,19 +1,23 @@
 return {
-    ["1"] = {
-        class = "Воин",
-        hp = 20,
-        attack = 5
+    {
+        class = "Рыцарь",
+        hp = 6,
+        str = 15,
+        dex = 12,
+        will = 14
     },
-
-    ["2"] = {
-        class = "Плут",
-        hp = 15,
-        attack = 7
+    {
+        class = "Паломник",
+        hp = 3,
+        str = 10,
+        dex = 14,
+        will = 16
     },
-
-    ["3"] = {
-        class = "Волшебник",
-        hp = 10,
-        attack = 10
+    {
+        class = "Отступник",
+        hp = 5,
+        str = 15,
+        dex = 16,
+        will = 12
     }
 }

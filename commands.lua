@@ -20,8 +20,12 @@ end
 commands.stats = function(player)
     print("Name: " .. player.name)
     print("Class: " .. player.class)
-    print("HP: " .. player.hp)
-    print("Attack: " .. player.attack)
+    print("Health Point: " .. player.hp)
+    print("Strength: " .. player.str)
+    print("Dextreity: " .. player.dex)
+    print("Will: " .. player.will)
+    print("Experience Points: " .. player.hp)
+    print("Level: " .. player.lvl)
 end
 
 commands.look = function(player)
